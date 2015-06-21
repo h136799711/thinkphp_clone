@@ -62,7 +62,7 @@ class Think {
           // 读取当前应用模式对应的配置文件
           if('common' != APP_MODE && is_file(CONF_PATH.'config_'.APP_MODE.CONF_EXT))
               C(load_config(CONF_PATH.'config_'.APP_MODE.CONF_EXT));  
-
+			
           // 加载模式别名定义
           if(isset($mode['alias'])){
               self::addMap(is_array($mode['alias'])?$mode['alias']:include $mode['alias']);
@@ -158,6 +158,8 @@ class Think {
               // 检测自定义命名空间 否则就以模块为命名空间
               $namespace  =   C('AUTOLOAD_NAMESPACE');
               $path       =   isset($namespace[$name])? dirname($namespace[$name]).'/' : APP_PATH;
+			  var_dump($path);
+			  
           }
           $filename       =   $path . str_replace('\\', '/', $class) . EXT;
           if(is_file($filename)) {
