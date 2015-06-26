@@ -44,7 +44,7 @@ class Route {
                         // URL后缀检测
                         continue;
                     }
-                    if(isset($options['method']) && REQUEST_METHOD != strtoupper($options['method'])){
+                    if(isset($options['method']) && REQUEST_METHOD != $options['method']){
                         // 请求类型检测
                         continue;
                     }
@@ -135,7 +135,7 @@ class Route {
 
     // 解析规范的路由地址
     // 地址格式 [控制器/操作?]参数1=值1&参数2=值2...
-    private static function parseUrl($url) {
+    public static function parseUrl($url) {
         $var  =  array();
         if(false !== strpos($url,'?')) { // [控制器/操作?]参数1=值1&参数2=值2...
             $info   =  parse_url($url);

@@ -62,7 +62,7 @@ class Think {
           // 读取当前应用模式对应的配置文件
           if('common' != APP_MODE && is_file(CONF_PATH.'config_'.APP_MODE.CONF_EXT))
               C(load_config(CONF_PATH.'config_'.APP_MODE.CONF_EXT));  
-			
+
           // 加载模式别名定义
           if(isset($mode['alias'])){
               self::addMap(is_array($mode['alias'])?$mode['alias']:include $mode['alias']);
@@ -157,7 +157,7 @@ class Think {
           }else{
               // 检测自定义命名空间 否则就以模块为命名空间
               $namespace  =   C('AUTOLOAD_NAMESPACE');
-              $path       =   isset($namespace[$name])? dirname($namespace[$name]).'/' : APP_PATH;			  
+              $path       =   isset($namespace[$name])? dirname($namespace[$name]).'/' : APP_PATH;
           }
           $filename       =   $path . str_replace('\\', '/', $class) . EXT;
           if(is_file($filename)) {
@@ -321,7 +321,7 @@ class Think {
      * @param string $label 标签
      * @param string $level 日志级别(或者页面Trace的选项卡)
      * @param boolean $record 是否记录日志
-     * @return void|array
+     * @return void
      */
     static public function trace($value='[think]',$label='',$level='DEBUG',$record=false) {
         static $_trace =  array();

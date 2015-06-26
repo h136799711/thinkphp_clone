@@ -13,7 +13,7 @@ namespace Think;
 
 class Verify {
     protected $config =	array(
-        'seKey'     =>  'hebidu.COM',   // 验证码加密密钥
+        'seKey'     =>  'ThinkPHP.CN',   // 验证码加密密钥
         'codeSet'   =>  '2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY',             // 验证码字符集合
         'expire'    =>  1800,            // 验证码过期时间（s）
         'useZh'     =>  false,           // 使用中文验证码 
@@ -96,7 +96,7 @@ class Verify {
         }
 
         if($this->authcode(strtoupper($code)) == $secode['verify_code']) {
-            $this->reset || session($key, null);
+            $this->reset && session($key, null);
             return true;
         }
 
@@ -168,7 +168,6 @@ class Verify {
         }
        
         // 保存验证码
-       	
         $key        =   $this->authcode($this->seKey);
         $code       =   $this->authcode(strtoupper(implode('', $code)));
         $secode     =   array();

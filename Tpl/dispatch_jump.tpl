@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>跳转提示</title>
@@ -19,7 +19,7 @@
         .system-message .detail{ font-size: 12px; line-height: 20px; margin-top: 12px; display:none}
         .btn
         {	border: none;
-        background: #8e7f3e;
+        background: #08c;
         color: #ffffff;
         padding: 9px 12px 10px;
         line-height: 22px;
@@ -35,7 +35,7 @@
         }
         .btn:hover, .btn:focus{
         background-image:none;
-        background-color: #8f8f4e;
+        background-color: #09c;
         color: #ffffff;
         outline: none;
         -webkit-transition: 0.25s
@@ -46,7 +46,7 @@
     </head>
     <body>
         <div class="system-message">
-            <p style="padding-left:10px;line-height:35px;color:white;background:#8e7f3e;">系统提醒</p>
+            <p style="padding-left:10px;line-height:35px;color:white;background:#08c;">系统提醒</p>
             <div style="padding:24px;">
 <present name="message">
                 <div class="success"><span><?php echo($message); ?></span></div>
@@ -84,6 +84,5 @@
         start();
         })();
         </script>
-        {__NORUNTIME__}
     </body>
 </html>

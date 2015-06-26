@@ -30,7 +30,7 @@ class Page{
         'next'   => '>>',
         'first'  => '1...',
         'last'   => '...%TOTAL_PAGE%',
-        'theme'  => '<span class="total-row">共 %TOTAL_ROW% 条记录</span> <ul class="pagination pagination-sm">%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END%</ul>',
+        'theme'  => '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END%',
     );
 
     /**
@@ -46,9 +46,6 @@ class Page{
         $this->listRows   = $listRows;  //设置每页显示行数
         $this->parameter  = empty($parameter) ? $_GET : $parameter;
         $this->nowPage    = empty($_GET[$this->p]) ? 1 : intval($_GET[$this->p]);
-		if(IS_POST){//如果是POST请求，通常为AJAX
-//      		$this->nowPage    = empty($_POST[$this->p]) ? 1 : intval($_POST[$this->p]);
-		}
         $this->nowPage    = $this->nowPage>0 ? $this->nowPage : 1;
         $this->firstRow   = $this->listRows * ($this->nowPage - 1);
     }
@@ -133,7 +130,7 @@ class Page{
                 }
             }else{
                 if($page > 0 && $this->totalPages != 1){
-                    $link_page .= '<li  class="active"><a  class="disabled">' . $page . '</a></li>';
+                    $link_page .= '<li class="active"><a href="javascript:void(0)" class="current">' . $page . '</a></li>';
                 }
             }
         }
@@ -143,6 +140,6 @@ class Page{
             array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%'),
             array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages),
             $this->config['theme']);
-        return "<nav>{$page_str}</nav>";
+        return "<ul class=\"pagination\">{$page_str}</ul>";
     }
 }

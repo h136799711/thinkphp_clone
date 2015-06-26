@@ -93,6 +93,7 @@ class Dispatcher {
                 }
             }
         }
+
         // 分析PATHINFO信息
         if(!isset($_SERVER['PATH_INFO'])) {
             $types   =  explode(',',C('URL_PATHINFO_FETCH'));
@@ -120,19 +121,17 @@ class Dispatcher {
             // URL后缀
             define('__EXT__', strtolower(pathinfo($_SERVER['PATH_INFO'],PATHINFO_EXTENSION)));
             $_SERVER['PATH_INFO'] = __INFO__;     
-            if(!defined('BIND_MODULE') && (!C('URL_ROUTER_ON') || !Route::check())){
-                if (__INFO__ && C('MULTI_MODULE')){ // 获取模块名
-                    $paths      =   explode($depr,__INFO__,2);
-                    $allowList  =   C('MODULE_ALLOW_LIST'); // 允许的模块列表
-                    $module     =   preg_replace('/\.' . __EXT__ . '$/i', '',$paths[0]);
-                    if( empty($allowList) || (is_array($allowList) && in_array_case($module, $allowList))){
-                        $_GET[$varModule]       =   $module;
-                        $_SERVER['PATH_INFO']   =   isset($paths[1])?$paths[1]:'';
-                    }
+            if (__INFO__ && !defined('BIND_MODULE') && C('MULTI_MODULE')){ // 获取模块名
+                $paths      =   explode($depr,__INFO__,2);
+                $allowList  =   C('MODULE_ALLOW_LIST'); // 允许的模块列表
+                $module     =   preg_replace('/\.' . __EXT__ . '$/i', '',$paths[0]);
+                if( empty($allowList) || (is_array($allowList) && in_array_case($module, $allowList))){
+                    $_GET[$varModule]       =   $module;
+                    $_SERVER['PATH_INFO']   =   isset($paths[1])?$paths[1]:'';
                 }
-            }             
+            }                   
         }
-
+        
         // URL常量
         define('__SELF__',strip_tags($_SERVER[C('URL_REQUEST_URI')]));
 
@@ -250,7 +249,7 @@ class Dispatcher {
      * 获得控制器的命名空间路径 便于插件机制访问
      */
     static private function getSpace($var,$urlCase) {
-        $space  =   !empty($_GET[$var])?strip_tags($_GET[$var]):'';
+        $space  =   !empty($_GET[$var])?ucfirst($var).'\\'.strip_tags($_GET[$var]):'';
         unset($_GET[$var]);
         return $space;
     }
