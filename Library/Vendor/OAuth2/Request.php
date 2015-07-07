@@ -200,10 +200,12 @@ class Request implements RequestInterface
             && in_array(strtoupper($requestMethod), array('PUT', 'DELETE'))
         ) {
             parse_str($request->getContent(), $data);
+            var_dump($data);
             $request->request = $data;
         } elseif (0 === strpos($contentType, 'application/json')
             && in_array(strtoupper($requestMethod), array('POST', 'PUT', 'DELETE'))
         ) {
+            var_dump($data);
             $data = json_decode($request->getContent(), true);
             $request->request = $data;
         }

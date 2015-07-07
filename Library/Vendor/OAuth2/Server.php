@@ -257,7 +257,6 @@ class Server implements ResourceControllerInterface,
     {
         $this->response = is_null($response) ? new Response() : $response;
         $this->getTokenController()->handleTokenRequest($request, $this->response);
-
         return $this->response;
     }
 

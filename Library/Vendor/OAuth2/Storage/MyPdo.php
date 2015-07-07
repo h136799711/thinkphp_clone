@@ -17,7 +17,7 @@ use OAuth2\OpenID\Storage\AuthorizationCodeInterface as OpenIDAuthorizationCodeI
  *
  * @author Brent Shaffer <bshafs at gmail dot com>
  */
-class Pdo implements
+class MyPdo implements
     AuthorizationCodeInterface,
     AccessTokenInterface,
     ClientCredentialsInterface,
@@ -68,6 +68,7 @@ class Pdo implements
             'scope_table'  => 'oauth_scopes',
             'public_key_table'  => 'oauth_public_keys',
         ), $config);
+
     }
 
     /* OAuth2\Storage\ClientCredentialsInterface */
@@ -118,7 +119,7 @@ class Pdo implements
     {
         $details = $this->getClientDetails($client_id);
         if (isset($details['grant_types'])) {
-            $grant_types = explode(' ', $details['grant_types']);
+            $grant_types = explode(',', $details['grant_types']);
 
             return in_array($grant_type, (array) $grant_types);
         }
@@ -145,7 +146,6 @@ class Pdo implements
     {
         // convert expires to datestring
         $expires = date('Y-m-d H:i:s', $expires);
-
         // if it exists, update it.
         if ($this->getAccessToken($access_token)) {
             $stmt = $this->db->prepare(sprintf('UPDATE %s SET client_id=:client_id, expires=:expires, user_id=:user_id, scope=:scope where access_token=:access_token', $this->config['access_token_table']));
@@ -300,7 +300,11 @@ class Pdo implements
     // plaintext passwords are bad!  Override this for your application
     protected function checkPassword($user, $password)
     {
-        return $user['password'] == sha1($password);
+        return $user['password'] == $this->think_ucenter_md5($password, UC_AUTH_KEY);
+    }
+
+    protected  function think_ucenter_md5($str,$key){
+        return '' === $str ? '' : md5(sha1($str) . $key);
     }
 
     public function getUser($username)
@@ -311,8 +315,7 @@ class Pdo implements
         if (!$userInfo = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             return false;
         }
-        var_dump($userInfo);
-        exit();
+
         // the default behavior is to use "username" as the user_id
         return array_merge(array(
             'user_id' => $username
@@ -322,7 +325,7 @@ class Pdo implements
     public function setUser($username, $password, $firstName = null, $lastName = null)
     {
         // do not store in plaintext
-        $password = sha1($password);
+        $password = $this->think_ucenter_md5($password,UC_AUTH_KEY);
 
         // if it exists, update it.
         if ($this->getUser($username)) {

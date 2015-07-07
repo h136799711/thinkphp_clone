@@ -207,7 +207,7 @@ class AuthorizeController implements AuthorizeControllerInterface
                 return false;
             }
             if (!$this->clientStorage->checkRestrictedGrantType($client_id, 'authorization_code')) {
-                $response->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unauthorized_client', 'The grant type is unauthorized for this client_id', null);
+                $response->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unauthorized_client of authorizatin_code', 'The grant type is unauthorized for this client_id', null);
 
                 return false;
             }

@@ -86,6 +86,7 @@ class TokenController implements TokenControllerInterface
          * and validate the request for that grant type
          */
         if (!$grantTypeIdentifier = $request->request('grant_type')) {
+
             $response->setError(400, 'invalid_request', 'The grant type was not specified in the request');
 
             return null;

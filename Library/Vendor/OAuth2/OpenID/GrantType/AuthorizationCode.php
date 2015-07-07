@@ -17,6 +17,7 @@ class AuthorizationCode extends BaseAuthorizationCode
         if (isset($this->authCode['id_token'])) {
             // OpenID Connect requests include the refresh token only if the
             // offline_access scope has been requested and granted.
+            // offline_access权限域 被请求 与 已授权 情况下的Openid 连接请求才会包含refresh token。
             $scopes = explode(' ', trim($scope));
             $includeRefreshToken = in_array('offline_access', $scopes);
         }
