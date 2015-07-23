@@ -192,6 +192,9 @@ class Request implements RequestInterface
     public static function createFromGlobals()
     {
         $class = get_called_class();
+
+        //TODO: 加入解密算法，规定传入$_POST['itboye']进行解密再传入参数,以替代$_POST
+        //TODO: 签名－防篡改
         $request = new $class($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER);
 
         $contentType = $request->server('CONTENT_TYPE', '');
@@ -200,12 +203,10 @@ class Request implements RequestInterface
             && in_array(strtoupper($requestMethod), array('PUT', 'DELETE'))
         ) {
             parse_str($request->getContent(), $data);
-            var_dump($data);
             $request->request = $data;
         } elseif (0 === strpos($contentType, 'application/json')
             && in_array(strtoupper($requestMethod), array('POST', 'PUT', 'DELETE'))
         ) {
-            var_dump($data);
             $data = json_decode($request->getContent(), true);
             $request->request = $data;
         }
