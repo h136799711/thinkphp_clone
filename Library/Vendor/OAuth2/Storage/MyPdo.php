@@ -148,8 +148,8 @@ class MyPdo implements
         $expires = date('Y-m-d H:i:s', $expires);
         // BY hebidu , 每次重新获取access_token，都会删除旧的access_token
         // AT 2015-08-07
-        $stmt = $this->db->prepare(sprintf('DELETE FROM %s where client_id=:client_id and user_id=:user_id and scope=:scope ', $this->config['access_token_table']));
-        $stmt->execute(compact('client_id', 'user_id', 'scope'));
+//        $stmt = $this->db->prepare(sprintf('DELETE FROM %s where client_id=:client_id and user_id=:user_id and scope=:scope ', $this->config['access_token_table']));
+//        $stmt->execute(compact('client_id', 'user_id', 'scope'));
 
         // if it exists, update it.
         if ($this->getAccessToken($access_token)) {
