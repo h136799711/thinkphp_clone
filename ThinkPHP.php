@@ -20,7 +20,7 @@ define('MEMORY_LIMIT_ON',function_exists('memory_get_usage'));
 if(MEMORY_LIMIT_ON) $GLOBALS['_startUseMems'] = memory_get_usage();
 
 // 版本信息
-const THINK_VERSION     =   '3.2.3beta';
+const THINK_VERSION     =   '3.2.3';
 
 // URL 模式定义
 const URL_COMMON        =   0;  //普通模式
@@ -46,7 +46,7 @@ if(function_exists('saeAutoLoader')){// 自动识别SAE环境
 }
 
 defined('RUNTIME_PATH') or define('RUNTIME_PATH',   APP_PATH.'Runtime/');   // 系统运行时目录
-defined('LIB_PATH')     or define('LIB_PATH',       THINK_PATH.'Library/'); // 系统核心类库目录
+defined('LIB_PATH')     or define('LIB_PATH',       realpath(THINK_PATH.'Library').'/'); // 系统核心类库目录
 defined('CORE_PATH')    or define('CORE_PATH',      LIB_PATH.'Think/'); // Think类库目录
 defined('BEHAVIOR_PATH')or define('BEHAVIOR_PATH',  LIB_PATH.'Behavior/'); // 行为类库目录
 defined('MODE_PATH')    or define('MODE_PATH',      THINK_PATH.'Mode/'); // 系统应用模式目录
@@ -66,7 +66,7 @@ defined('ADDON_PATH')   or define('ADDON_PATH',     APP_PATH.'Addon');
 // 系统信息
 if(version_compare(PHP_VERSION,'5.4.0','<')) {
     ini_set('magic_quotes_runtime',0);
-    define('MAGIC_QUOTES_GPC',get_magic_quotes_gpc()?True:False);
+    define('MAGIC_QUOTES_GPC',get_magic_quotes_gpc()? true : false);
 }else{
     define('MAGIC_QUOTES_GPC',false);
 }

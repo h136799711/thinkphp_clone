@@ -145,6 +145,8 @@ class Dispatcher {
             define('MODULE_PATH', APP_PATH.MODULE_NAME.'/');
             // 定义当前模块的模版缓存路径
             C('CACHE_PATH',CACHE_PATH.MODULE_NAME.'/');
+            // 定义当前模块的日志目录
+	        C('LOG_PATH',  realpath(LOG_PATH).'/'.MODULE_NAME.'/');
 
             // 模块检测
             Hook::listen('module_check');
@@ -168,6 +170,8 @@ class Dispatcher {
             // 加载模块函数文件
             if(is_file(MODULE_PATH.'Common/function.php'))
                 include MODULE_PATH.'Common/function.php';
+            
+            $urlCase        =   C('URL_CASE_INSENSITIVE');
             // 加载模块的扩展配置文件
             load_ext_file(MODULE_PATH);
         }else{
@@ -243,7 +247,7 @@ class Dispatcher {
         define('__ACTION__',__CONTROLLER__.$depr.(defined('ACTION_ALIAS')?ACTION_ALIAS:ACTION_NAME));
 
         //保证$_REQUEST正常取值
-        $_REQUEST = array_merge($_POST,$_GET);
+        $_REQUEST = array_merge($_POST,$_GET,$_COOKIE);	// -- 加了$_COOKIE.  保证哦..
     }
 
     /**
